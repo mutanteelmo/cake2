@@ -1,0 +1,45 @@
+services:
+  app:
+    image: analistaelmo/cakephp2_composer_app:1.0 
+    # image: php:7.1-fpm # Caso queira imagem padrão
+    # Caso queira o build com Dockerfile tradicional (sem buildx)
+    # build:
+    #   context: ./docker/dockerfiles
+    #   dockerfile: /PHP&Composer
+    container_name: cakephp2_app
+    volumes:
+      - ./src:/var/www/html
+    working_dir: /var/www/html
+    networks:
+      - cake_network
+
+  nginx:
+    image: nginx:stable
+    container_name: cakephp2_nginx
+    ports:
+      - "8080:80"
+    volumes:
+      - ./src:/var/www/html
+      - ./docker/nginx/conf.d:/etc/nginx/conf.d
+    depends_on:
+      - app
+    networks:
+      - cake_network
+
+  mysql:
+    image: bitnami/mysql:latest
+    container_name: cakephp2_mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=cakephp
+      - MYSQL_USER=cakeuser
+      - MYSQL_PASSWORD=cakepass
+    ports:
+      - "3306:3306"
+    networks:
+      - cake_network
+
+networks:
+  cake_network:
+    driver: bridge
+
