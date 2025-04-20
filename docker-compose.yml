@@ -27,15 +27,14 @@ services:
       - cake_network
 
   mysql:
-    image: bitnami/mysql:latest
+    image: bitnami/mysql:5.7
     container_name: cakephp2_mysql
     environment:
       - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=cakephp
-      - MYSQL_USER=cakeuser
-      - MYSQL_PASSWORD=cakepass
     ports:
       - "3306:3306"
+    volumes:
+      - ./docker/mysql/init/init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - cake_network
 
