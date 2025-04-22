@@ -17,12 +17,13 @@ Precisa ter o `src/composer.json`
 
 E dentro do container em /var/ww/html (src) - executar `composer install`. Ao executar isto, o Cake2 será iniciado em `Vendor/`.
 
-Para iniciar um projeto novo: `Vendor/bin/cake bake project .`
+Para iniciar um projeto novo: `Vendor/bin/cake bake project .`. O composer.json e .lock ficarão no mesmo nivel.
 
 
+# Testes
 
+🔁 setUp() e tearDown() são executados para cada método de teste individualmente.
 
+🧼 As tabelas das fixtures são apagadas e recriadas entre cada método de teste.
 
-As execuções do Bake sempre serão a partir do Vendor do composer `Vendor/bin/cake bake comando`, pois as criações de classese afins, serão realizadas dentro de `app/`.
-
-
+Isso garante isolamento total entre os testes, evitando que um testA() influencie o testB().
