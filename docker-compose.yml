@@ -17,6 +17,7 @@ services:
     image: nginx:stable
     container_name: cakephp2_nginx
     ports:
+      - "9000:9000" #xdebug
       - "8080:80"
     volumes:
       - ./src:/var/www/html
